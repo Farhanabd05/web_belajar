@@ -1,0 +1,252 @@
+body{
+    font-family: 'inter';
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.discovery-header{
+    width: 100%;
+    aspect-ratio: 5 / 1;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #28a745, #00c851);
+    margin: 20px auto;
+    box-sizing: border-box;
+}
+.discovery-header img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.discovery-footer{
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    aspect-ratio: 5 / 1;
+    border-radius: 0px;
+    background: #aaa;
+    margin: 20px 0 0 0;
+    box-sizing: border-box;
+}
+
+/* search + range container */
+.container-search-box-and-minmax{
+    display: flex;
+    align-items:center;
+    gap: 8px;
+}
+
+.container-search-box-and-minmax label{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-right: 10px;
+}
+
+/* search box */
+.container-search-box{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #999;
+    border-radius: 12px;
+    padding: 8px 12px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.container-search-box .search-svg{
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.container-search-box input[type="text"] {
+    border: none;
+    outline: none;
+    background: transparent; /* jaga2 container ganti warna */
+    width: 100%;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* categorical search */
+#categoryFieldset{
+    margin-top: 8px;
+    border: 0;
+}
+
+#categoryFieldset label{
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;   
+}
+input[type="checkbox"]{
+    border: 1px solid #555;
+    transform: scale(1.75);
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;   
+    margin: 8px 8px;
+}
+
+/* filter button */
+.filter-btn{
+    background-color: #007a3d; /* hijau random */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.primary{
+    display:block;
+}
+
+.backup{
+    display: none;
+}
+
+/* cards per page button */
+#cardsPerPageButtons button{
+    background-color: #fff;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor:pointer;
+    margin: 8px 0;
+}
+
+/* card grid */
+#product-grid{
+    display:grid;
+    grid-template-columns: repeat(6,minmax(200px,1fr));
+}
+
+/* pagination */
+#paginationForm{
+    display: flex;
+    align-items:center;
+    gap: 12px;
+    justify-content: center;
+    margin:20px 0;
+}
+
+#paginationForm .page-link{
+    text-decoration: none;
+    color: #555;
+    padding: 6px 12px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* skeleton */
+.skeleton-card{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0px;
+    background: #eee;
+    margin: 4px;
+    box-sizing: border-box;
+}
+legend{
+    display: none;
+}
+/* responsif */
+@media (max-width: 400px){
+    body{
+        font-family: 'inter';
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .discovery-header{
+        width: 100%;
+        aspect-ratio: 3 / 1;
+        border-radius: 8px;
+        background: linear-gradient(90deg, #28a745, #00c851);
+        margin: 20px auto;
+        box-sizing: border-box;
+    }
+
+    .discovery-footer{
+        width: 100%;
+        aspect-ratio: 3 / 1;
+        border-radius: 0px;
+        background: #aaa;
+        margin: 20px 0 0 0;
+        box-sizing: border-box;
+    }
+    legend{
+        display: none;
+    }
+    #categoryFieldset label{
+        padding-left: 16px;
+        transform: scale(1.2);
+        display:block;
+    }
+    .container-search-box-and-minmax{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .container-search-box{
+        max-width: 100%;
+    }
+
+    .container-search-box-and-minmax label {
+        font-size: 18px;
+        display: block;
+        width: 100%;
+    }
+    .container-search-box-and-minmax input[type="number"] {
+        font-size: 16px;
+        padding: 8px 12px;
+        border-radius: 12px;
+    }
+
+    .container-search-box {
+        width: 90% ;
+    }
+
+    .filter-btn {
+        width: 100%;
+    }
+
+    .primary{
+        display:none;
+    }
+
+    .backup{
+        display: block;
+    }
+
+    #product-grid{
+        grid-template-columns: repeat(2, minmax(150px, 1fr));
+        gap: 0px;
+    }
+
+    .product-card img{
+        width: 100%;
+        aspect-ratio: 1/1;
+    }
+    #paginationForm .page-link{
+        background-color: #00aa5b; /* hijau random */
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 8px 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}

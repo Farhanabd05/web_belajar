@@ -1,0 +1,700 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f7f7f7; 
+  color: #212121;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Page Header */
+h1 {
+  max-width: 1200px;
+  margin: 24px auto 16px;
+  padding: 0 16px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #212121;
+}
+
+/* Filter Container */
+.filter-container { 
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  padding: 20px 24px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-container label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #212121;
+}
+
+.filter-container select,
+.filter-container input[type="search"] {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  color: #212121;
+  background: white;
+  transition: border-color 0.2s;
+}
+
+.filter-container select:focus,
+.filter-container input[type="search"]:focus {
+  outline: none;
+  border-color: #00AA5B;
+}
+
+.filter-container select {
+  min-width: 180px;
+  cursor: pointer;
+}
+
+.filter-container input[type="search"] {
+  min-width: 250px;
+  flex: 1;
+}
+
+.filter-container button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #00AA5B;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.filter-container button:hover {
+  background: #008d4c;
+}
+
+.filter-container button:active {
+  transform: scale(0.98);
+}
+
+hr {
+  display: none; /* Hapus hr karena sudah ada visual separation */
+}
+
+/* Loading Indicator */
+#loading-indicator { 
+  display: none;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #6d7588;
+  font-style: italic;
+}
+
+#loading-indicator.active {
+  display: block;
+}
+
+/* Order List Container */
+#order-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 24px;
+}
+
+#order-list:empty::after { 
+  content: "Tidak ada pesanan untuk ditampilkan dengan filter ini."; 
+  color: #6d7588; 
+  font-size: 14px;
+  display: block; 
+  padding: 60px 20px;
+  text-align: center;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Order Card */
+.order-card { 
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+
+.order-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Order Header */
+.order-header { 
+  background: #fafafa;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-header h3 { 
+  font-size: 16px;
+  font-weight: 600;
+  color: #212121;
+  margin: 0 0 4px 0;
+}
+
+.order-header span { 
+  font-size: 13px;
+  color: #6d7588;
+  display: block;
+}
+
+.order-header > div:last-child {
+  text-align: right;
+}
+
+.order-header > div:last-child > span:last-child {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+/* Status Badge */
+.status-badge { 
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-waiting_approval { 
+  background-color: #fff8e6;
+  color: #b8860b;
+}
+
+.status-approved { 
+  background-color: #e6f4ff;
+  color: #0066cc;
+}
+
+.status-on_delivery { 
+  background-color: #e6f7f7;
+  color: #008b8b;
+}
+
+.status-received { 
+  background-color: #f0fdf7;
+  color: #00AA5B;
+}
+
+.status-rejected { 
+  background-color: #fff1f0;
+  color: #d32f2f;
+}
+
+/* Order Body (Items List) */
+.order-body { 
+  padding: 0;
+}
+
+.item { 
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e5e5;
+  align-items: center;
+}
+
+.item:last-child { 
+  border-bottom: none;
+}
+
+.item img { 
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+}
+
+.item-details { 
+  flex: 1;
+}
+
+.item-details strong { 
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: #212121;
+  margin-bottom: 4px;
+}
+
+.item-details span { 
+  font-size: 14px;
+  color: #6d7588;
+}
+
+.item-price { 
+  font-weight: 600;
+  font-size: 15px;
+  color: #212121;
+  text-align: right;
+}
+
+/* Order Footer */
+.order-footer { 
+  background: #fafafa;
+  padding: 20px 24px;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-footer strong { 
+  font-size: 16px;
+  font-weight: 700;
+  color: #212121;
+}
+
+.order-footer button {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  background: white;
+  color: #00AA5B;
+  border: 1px solid #00AA5B;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.order-footer button:hover {
+  background: #f0fdf7;
+}
+
+/* Order Details (Collapsible) */
+.order-details {
+  padding: 20px 24px;
+  background: #fdfdfd;
+  border-top: 1px solid #e5e5e5;
+}
+
+.order-details p {
+  font-size: 14px;
+  color: #6d7588;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.order-details strong {
+  color: #212121;
+  font-weight: 600;
+}
+
+/* Order Actions (Approve, Reject, etc.) */
+.order-actions { 
+  padding: 20px 24px;
+  border-top: 1px solid #e5e5e5;
+  text-align: right;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.order-actions button { 
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+  border: none;
+}
+
+.order-actions button:first-child { /* Approve button */
+  background: #00AA5B;
+  color: white;
+}
+
+.order-actions button:first-child:hover {
+  background: #008d4c;
+}
+
+.order-actions button:nth-child(2) { /* Reject button */
+  background: white;
+  color: #ff4747;
+  border: 1px solid #ff4747;
+}
+
+.order-actions button:nth-child(2):hover {
+  background: #fff5f5;
+}
+
+.order-actions button:disabled {
+  background: #e5e5e5;
+  color: #bbb;
+  cursor: not-allowed;
+  border-color: #e5e5e5;
+}
+
+/* Pagination Container */
+.pagination-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 24px;
+  text-align: center;
+}
+
+.pagination-buttons-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pagination-buttons-row button {
+  min-width: 40px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background: white;
+  color: #212121;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.pagination-buttons-row button:hover:not(:disabled) {
+  background: #f7f7f7;
+  border-color: #00AA5B;
+  color: #00AA5B;
+}
+
+.pagination-buttons-row button:disabled {
+  background: #00AA5B;
+  color: white;
+  border-color: #00AA5B;
+  cursor: default;
+}
+
+.pagination-page-info {
+  font-size: 13px;
+  color: #6d7588;
+  margin-top: 8px;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  display: none;
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(2px);
+}
+
+.modal-overlay.active {
+  display: block;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 32px;
+  border: none;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-content h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212121;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #212121;
+  margin-bottom: 8px;
+}
+
+.modal-content input[type="text"],
+.modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  color: #212121;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content textarea:focus {
+  outline: none;
+  border-color: #00AA5B;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.modal-actions button {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+#modal-ok-btn {
+  background-color: #00AA5B;
+  color: white;
+}
+
+#modal-ok-btn:hover {
+  background-color: #008d4c;
+}
+
+#modal-cancel-btn {
+  background-color: white;
+  color: #212121;
+  border: 1px solid #e5e5e5;
+}
+
+#modal-cancel-btn:hover {
+  background-color: #f7f7f7;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .order-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+  }
+  
+  .order-header > div:last-child {
+      text-align: left;
+      width: 100%;
+  }
+  
+  .order-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+  }
+  
+  .order-footer button {
+      width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+      font-size: 20px;
+  }
+  
+  .filter-container {
+      flex-direction: column;
+      align-items: stretch;
+  }
+  
+  .filter-container select,
+  .filter-container input[type="search"],
+  .filter-container button {
+      width: 100%;
+      min-width: unset;
+  }
+  
+  .item {
+      grid-template-columns: 1fr;
+      text-align: center;
+  }
+  
+  .item img {
+      width: 100%;
+      height: 200px;
+      margin: 0 auto;
+  }
+  
+  .item-price {
+      text-align: center;
+  }
+  
+  .order-actions {
+      flex-direction: column;
+  }
+  
+  .order-actions button {
+      width: 100%;
+  }
+  
+  .pagination-buttons-row {
+      flex-wrap: wrap;
+  }
+}
+
+/* err Messages */
+.error-message {
+    color: #ff4747 !important;
+    background: #fff5f5;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 4px solid #ff4747;
+    text-align: center;
+    margin: 20px;
+}
+
+/* hidden class untuk toggle details */
+.hidden {
+    display: none !important;
+}
+
+/* order details */
+.order-details {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    background-color: #fdfdfd;
+}
+
+/* details toggle button */
+.details-toggle-btn {
+    margin-left: 15px;
+    padding: 5px 10px;
+    font-size: 0.9em;
+}
+
+/* order-date */
+.order-date {
+    text-align: right;
+    display: block;
+    margin-top: 5px;
+}
+
+/* pagination */
+.pagination-buttons-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.pagination-page-info {
+    margin: 8px 0 0 0;
+    text-align: center;
+}
+
+/* search label */
+.search-label {
+    margin-left: 15px;
+}
+
+/* modal textarea */
+.modal-textarea {
+    width: 95%;
+}
+
+/* pagination container */
+.pagination-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.delivery-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.delivery-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  color: #212121;
+  transition: border-color 0.2s;
+  text-align: center;
+  font-weight: 600;
+}
+
+.delivery-input:focus {
+  outline: none;
+  border-color: #00AA5B;
+}
+
+/* Chrome, Safari, Edge, Opera - hilangkan spinner */
+.delivery-input::-webkit-outer-spin-button,
+.delivery-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox - hilangkan spinner */
+.delivery-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.delivery-modal-content .form-group label {
+  text-align: center;
+  color: #6d7588;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .delivery-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+}

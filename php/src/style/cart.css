@@ -1,0 +1,321 @@
+/* General Body */
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f7f7f7; 
+    color: #212121;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Page Header */
+.cart-header {
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 24px 32px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.cart-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Main Layout Grid */
+.cart-container { 
+    display: grid; 
+    grid-template-columns: 1fr 380px; /* Layout 2 kolom seperti checkout */
+    gap: 24px; 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px 24px 16px;
+    align-items: start;
+}
+
+/* Kolom Kiri (Daftar Item) */
+.cart-items {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    overflow: hidden; /* Agar border-radius rapi saat ada border-bottom */
+}
+
+/* Header Grup Toko */
+.store-group { 
+    font-size: 16px;
+    font-weight: 600;
+    color: #212121;
+    padding: 20px 24px;
+    background: #fafafa;
+    border-bottom: 1px solid #e5e5e5;
+    margin: 0;
+}
+
+/* Kartu Item Individual */
+.item-card { 
+    display: grid;
+    grid-template-columns: 80px 1fr auto; /* img, info, actions */
+    gap: 16px; 
+    border-bottom: 1px solid #e5e5e5; 
+    padding: 20px 24px;
+    align-items: center;
+}
+.item-card:last-child {
+    border-bottom: none;
+}
+.item-card .cart-image { 
+    width: 80px; 
+    height: 80px; 
+    object-fit: cover; 
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+.item-card .button .img {
+    width: 80px; 
+    height: 80px; 
+    object-fit: cover; 
+    border: none;
+}
+.item-card.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+/* Info Item (Nama, Harga, Subtotal) */
+.item-info {
+    flex: 1;
+}
+.item-info strong {
+    font-size: 15px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+    color: #212121;
+}
+.item-info p {
+    font-size: 14px;
+    color: #4a5568;
+    margin: 0;
+}
+.item-info p[id^="subtotal-"] { /* Target subtotal */
+    font-weight: 600;
+    color: #212121;
+    margin-top: 8px;
+}
+
+/* Aksi Item (Input Kuantitas, Tombol Hapus) */
+.item-actions { 
+    text-align: right; 
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.item-actions .quantity-control { 
+    display: flex; 
+    align-items: center; 
+    gap: 0; 
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+}
+
+.item-actions .qty-btn { 
+    width: 32px; 
+    height: 32px; 
+    border: none;
+    background: white; 
+    color: #00AA5B; 
+    font-size: 18px; 
+    font-weight: 600;
+    cursor: pointer; 
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-actions .qty-btn:hover { 
+    background: #f7f7f7; 
+}
+
+.item-actions .qty-btn:active {
+    background: #e5e5e5;
+}
+
+.item-actions .quantity-input { 
+    width: 50px; 
+    height: 32px;
+    text-align: center; 
+    padding: 0;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    -moz-appearance: textfield; /* Hapus panah di Firefox */
+}
+
+/* Hapus panah di Chrome, Safari, Edge */
+.item-actions .quantity-input::-webkit-outer-spin-button,
+.item-actions .quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.item-actions .delete-item-btn { 
+    background-color: transparent;
+    color: #ff4747;
+    border: none;
+    cursor: pointer; 
+    padding: 5px; 
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+.delete-item-btn:hover {
+    text-decoration: underline;
+}
+
+/* Kolom Kanan (Ringkasan Belanja) */
+.cart-summary { 
+    position: sticky;
+    top: 88px; /* 64px (navbar) + 24px (jarak) */
+    background: white;
+    border: none;
+    padding: 24px; 
+    border-radius: 8px; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.cart-summary h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+.cart-summary p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #4a5568;
+    margin-bottom: 12px;
+}
+.cart-summary hr {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 16px 0;
+}
+.cart-summary h4 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+/* Tombol Checkout */
+#checkout-btn { 
+    width: 100%; 
+    padding: 14px; 
+    font-size: 15px; 
+    background-color: #00AA5B; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    border-radius: 8px; 
+    font-weight: 600;
+    margin-top: 20px;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+#checkout-btn:hover {
+    background: #008d4c;
+}
+#checkout-btn:disabled { 
+    background-color: #e5e5e5; 
+    color: #bbb;
+    cursor: not-allowed;
+}
+
+/* Status Loading & Kosong */
+#loading-cart { 
+    font-style: italic; 
+    color: #4a5568; 
+    text-align: center; 
+    padding: 60px 20px;
+}
+#cart-items-container:empty {
+    padding: 60px 20px;
+    text-align: center;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+#cart-items-container:empty::after { 
+    content: "Keranjang Anda kosong."; 
+    color: #4a5568; 
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .cart-container {
+        grid-template-columns: 1fr;
+    }
+    .cart-summary {
+        position: static; /* Lepas dari sticky */
+    }
+}
+@media (max-width: 768px) {
+    .item-card {
+        grid-template-columns: 1fr; /* Tumpuk semua */
+        text-align: center;
+    }
+    .item-card img {
+        width: 100%;
+        height: 200px;
+        margin: 0 auto;
+    }
+    .item-actions {
+        align-items: center;
+    }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid #00AA5B;
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.error-message {
+    color: #ff4747 !important;
+    background: #fff5f5;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 4px solid #ff4747;
+    text-align: center;
+    margin: 20px;
+}

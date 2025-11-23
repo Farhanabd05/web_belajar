@@ -1,0 +1,40 @@
+footer {
+    width: 100%;
+    padding: 30px 12px;
+    font-size: 14px;
+}
+
+footer hr{
+    margin: 20px 0'
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.footer-grid h4{
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #111;
+}
+.footer-grid p{
+    font-size: 13px;
+    color: #666;
+}
+
+.footer-bottom{
+    text-align: center;    
+    font-size: 13px;
+    color: #666;
+}
+
+@media (max-width: 400px){
+    .footer-grid{
+        display: none;
+    }
+    .footer-bottom hr{
+        display: none;
+    }
+}
