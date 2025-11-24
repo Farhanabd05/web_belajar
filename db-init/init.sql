@@ -103,7 +103,52 @@ CREATE TYPE order_status AS ENUM ('waiting_approval', 'approved', 'rejected', 'o
         FOREIGN KEY (order_id) REFERENCES "Order"(order_id) ON DELETE CASCADE,
         FOREIGN KEY (product_id) REFERENCES Product(product_id)
     );
+
+    -- Auctions table
+CREATE TABLE IF NOT EXISTS auctions (
+    id SERIAL PRIMARY KEY,
+    product_id INTEGER NOT NULL REFERENCES Product(product_id) ON DELETE CASCADE,
+    seller_id INTEGER NOT NULL REFERENCES Users(user_id) ON DELETE CASCADE,
+    starting_price INTEGER NOT NULL,
+    current_price INTEGER NOT NULL,
+    status VARCHAR(20) DEFAULT 'scheduled' CHECK (status IN ('scheduled', 'active', 'ended', 'cancelled')),
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP,
+    last_bid_time TIMESTAMP,
+    winner_id INTEGER REFERENCES Users(user_id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Auction bids table
+CREATE TABLE IF NOT EXISTS auction_bids (
+    id SERIAL PRIMARY KEY,
+    auction_id INTEGER NOT NULL REFERENCES auctions(id) ON DELETE CASCADE,
+    bidder_id INTEGER NOT NULL REFERENCES Users(user_id) ON DELETE CASCADE,
+    bid_amount INTEGER NOT NULL,
+    bid_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_bid_per_auction UNIQUE (auction_id, bidder_id, bid_time)
+);
+
+
+-- WebSocket tickets table
+CREATE TABLE IF NOT EXISTS ws_tickets (
+    id SERIAL PRIMARY KEY,
+    ticket VARCHAR(64) UNIQUE NOT NULL,
+    user_id INTEGER NOT NULL REFERENCES Users(user_id) ON DELETE CASCADE,
+    used BOOLEAN DEFAULT false,
+    expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- Indexes for performance
+CREATE INDEX idx_auctions_status ON auctions(status);
+CREATE INDEX idx_auctions_start_time ON auctions(start_time);
+CREATE INDEX idx_auction_bids_auction_id ON auction_bids(auction_id);
     
+CREATE INDEX idx_ws_tickets_ticket ON ws_tickets(ticket);
+CREATE INDEX idx_ws_tickets_expires ON ws_tickets(expires_at);
 
 --- 1. KATEGORI (WAJIB) ---
 INSERT INTO Category (name) VALUES ('Elektronik');
@@ -411,5 +456,17 @@ INSERT INTO Order_Items (order_id, product_id, quantity, price_at_order, subtota
 INSERT INTO Order_Items (order_id, product_id, quantity, price_at_order, subtotal) VALUES (25, 33, 2, 260106, 520212);
 UPDATE "Order" SET total_price = 1432554 WHERE order_id = 25;
 
---- 8. MEMBUAT INDEKS FTS ---
+--- 8. INSERT DUMMY AUCTIONS ---
+INSERT INTO auctions (product_id, seller_id, starting_price, current_price, status, start_time, last_bid_time)
+VALUES (1, 1, 100000, 100000, 'active', NOW(), NOW() - INTERVAL '20 seconds');
+
+-- Insert test auction (last bid was 20 seconds ago = should end immediately)
+INSERT INTO auctions (product_id, seller_id, starting_price, current_price, status, start_time, last_bid_time)
+VALUES (1, 21, 100000, 150000, 'active', NOW(), NOW() - INTERVAL '20 seconds');
+
+-- Insert a test bid
+INSERT INTO auction_bids (auction_id, bidder_id, bid_amount)
+VALUES (1, 1, 150000);
+
+--- 9. MEMBUAT INDEKS FTS ---
 CREATE INDEX IF NOT EXISTS idx_product_search ON Product USING GIN (search_vector);

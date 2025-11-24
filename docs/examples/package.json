@@ -1,0 +1,23 @@
+{
+  "name": "nimonspedia-m2-examples",
+  "version": "1.0.0",
+  "description": "Test clients and examples for Nimonspedia M2 WebSocket integration",
+  "scripts": {
+    "test:ws": "node test-ws-client.js",
+    "test:auth": "bash test-auth-flow.sh",
+    "test:wscat": "bash test-wscat.sh",
+    "test:all": "bash test-auth-flow.sh && node test-ws-client.js"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.6.1",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "wscat": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Nimonspedia Team",
+  "license": "MIT"
+}

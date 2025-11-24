@@ -39,6 +39,26 @@ services:
       - ./db-init:/docker-entrypoint-initdb.d
     networks:
       - nimon-net
+  nodejs:
+    build:
+      context: ./nodejs
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./nodejs:/app
+      - /app/node_modules
+    environment:
+      - PORT=3001
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_NAME=nimonspedia
+      - DB_USER=user
+      - DB_PASSWORD=password
+    depends_on:
+      - database
+    networks:
+      - nimon-net
     
 volumes:
   db-data:
