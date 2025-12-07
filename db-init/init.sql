@@ -117,7 +117,8 @@ CREATE TABLE IF NOT EXISTS auctions (
     last_bid_time TIMESTAMP,
     winner_id INTEGER REFERENCES Users(user_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ending_soon_notified BOOLEAN DEFAULT FALSE
 );
 
 -- Auction bids table
@@ -456,17 +457,71 @@ INSERT INTO Order_Items (order_id, product_id, quantity, price_at_order, subtota
 INSERT INTO Order_Items (order_id, product_id, quantity, price_at_order, subtotal) VALUES (25, 33, 2, 260106, 520212);
 UPDATE "Order" SET total_price = 1432554 WHERE order_id = 25;
 
---- 8. INSERT DUMMY AUCTIONS ---
-INSERT INTO auctions (product_id, seller_id, starting_price, current_price, status, start_time, last_bid_time)
-VALUES (1, 1, 100000, 100000, 'active', NOW(), NOW() - INTERVAL '20 seconds');
+INSERT INTO auctions (
+  product_id, 
+  seller_id, 
+  starting_price, 
+  current_price, 
+  status, 
+  start_time, 
+  end_time,
+  last_bid_time,
+  created_at
+) VALUES (
+  1,                    -- Product: T-Shirt milik seller 21
+  21,                   -- Seller: Wirda Palastri
+  50000,                -- Starting price: Rp 50,000
+  50000,                -- Current price: Rp 50,000 (belum ada bid)
+  'active',             -- Status: active (siap di-bid)
+  NOW() - INTERVAL '5 minutes',  -- Sudah start 5 menit lalu
+  NOW() + INTERVAL '10 minutes', -- Akan end 10 menit lagi
+  NOW(),                -- Last bid time: sekarang
+  NOW()
+);
 
--- Insert test auction (last bid was 20 seconds ago = should end immediately)
-INSERT INTO auctions (product_id, seller_id, starting_price, current_price, status, start_time, last_bid_time)
-VALUES (1, 21, 100000, 150000, 'active', NOW(), NOW() - INTERVAL '20 seconds');
+INSERT INTO auctions (
+  product_id, 
+  seller_id, 
+  starting_price, 
+  current_price, 
+  status, 
+  start_time, 
+  end_time,
+  last_bid_time,
+  created_at
+) VALUES (
+  1,                    -- Product: T-Shirt milik seller 21
+  21,                   -- Seller: Wirda Palastri
+  60000,                -- Starting price: Rp 50,000
+  60000,                -- Current price: Rp 50,000 (belum ada bid)
+  'active',             -- Status: active (siap di-bid)
+  NOW() - INTERVAL '5 minutes',  -- Sudah start 5 menit lalu
+  NOW() + INTERVAL '10 minutes', -- Akan end 10 menit lagi
+  NOW(),                -- Last bid time: sekarang
+  NOW()
+);
 
--- Insert a test bid
-INSERT INTO auction_bids (auction_id, bidder_id, bid_amount)
-VALUES (1, 1, 150000);
+INSERT INTO auctions (
+  product_id, 
+  seller_id, 
+  starting_price, 
+  current_price, 
+  status, 
+  start_time, 
+  end_time,
+  last_bid_time,
+  created_at
+) VALUES (
+  1,                    -- Product: T-Shirt milik seller 21
+  21,                   -- Seller: Wirda Palastri
+  60000,                -- Starting price: Rp 50,000
+  60000,                -- Current price: Rp 50,000 (belum ada bid)
+  'active',             -- Status: active (siap di-bid)
+  NOW() + INTERVAL '5 minutes',  -- Sudah start 5 menit lalu
+  NOW() + INTERVAL '10 minutes', -- Akan end 10 menit lagi
+  NOW(),                -- Last bid time: sekarang
+  NOW()
+);
 
 --- 9. MEMBUAT INDEKS FTS ---
 CREATE INDEX IF NOT EXISTS idx_product_search ON Product USING GIN (search_vector);

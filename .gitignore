@@ -2,7 +2,3 @@ file_structure.py
 .github/
 coret2/
 backup_nimonspedia.sql
-nodejs/.env
-.env
-nodejs/node_modules
-cookies.txt

@@ -460,31 +460,31 @@ Database sudah terisi dengan data dummy:
 - 25 pesanan dengan berbagai status
 
 ### Akun Testing:
-[BUYER] Email: buyer1@nimon.com , Password: nimon
-[BUYER] Email: buyer2@nimon.com , Password: nimon
-[BUYER] Email: buyer3@nimon.com , Password: nimon
-[BUYER] Email: buyer4@nimon.com , Password: rahasia
-[BUYER] Email: buyer5@nimon.com , Password: testing
-[BUYER] Email: buyer6@nimon.com , Password: nimon
-[BUYER] Email: buyer7@nimon.com , Password: testing
-[BUYER] Email: buyer8@nimon.com , Password: pedia
-[BUYER] Email: buyer9@nimon.com , Password: anjing
+[BUYER] Email: buyer1@nimon.com , Password: kucing
+[BUYER] Email: buyer2@nimon.com , Password: password
+[BUYER] Email: buyer3@nimon.com , Password: testing
+[BUYER] Email: buyer4@nimon.com , Password: pedia
+[BUYER] Email: buyer5@nimon.com , Password: masuk
+[BUYER] Email: buyer6@nimon.com , Password: buyer
+[BUYER] Email: buyer7@nimon.com , Password: kuatbanget
+[BUYER] Email: buyer8@nimon.com , Password: laptop
+[BUYER] Email: buyer9@nimon.com , Password: laptop
 [BUYER] Email: buyer10@nimon.com , Password: laptop
-[BUYER] Email: buyer11@nimon.com , Password: masuk
+[BUYER] Email: buyer11@nimon.com , Password: pedia
 [BUYER] Email: buyer12@nimon.com , Password: rahasia
-[BUYER] Email: buyer13@nimon.com , Password: buyer
-[BUYER] Email: buyer14@nimon.com , Password: seller
-[BUYER] Email: buyer15@nimon.com , Password: seller
-[BUYER] Email: buyer16@nimon.com , Password: aman123
-[BUYER] Email: buyer17@nimon.com , Password: buyer
-[BUYER] Email: buyer18@nimon.com , Password: pedia
-[BUYER] Email: buyer19@nimon.com , Password: pedia
-[BUYER] Email: buyer20@nimon.com , Password: testing
-[SELLER] Email: seller21@nimon.com , Password: rahasia
-[SELLER] Email: seller22@nimon.com , Password: seller
-[SELLER] Email: seller23@nimon.com , Password: gaming
-[SELLER] Email: seller24@nimon.com , Password: anjing
-[SELLER] Email: seller25@nimon.com , Password: pedia
+[BUYER] Email: buyer13@nimon.com , Password: seller
+[BUYER] Email: buyer14@nimon.com , Password: nimon
+[BUYER] Email: buyer15@nimon.com , Password: pedia
+[BUYER] Email: buyer16@nimon.com , Password: nimon
+[BUYER] Email: buyer17@nimon.com , Password: nimon
+[BUYER] Email: buyer18@nimon.com , Password: kucing
+[BUYER] Email: buyer19@nimon.com , Password: buyer
+[BUYER] Email: buyer20@nimon.com , Password: kucing
+[SELLER] Email: seller21@nimon.com , Password: laptop
+[SELLER] Email: seller22@nimon.com , Password: rahasia
+[SELLER] Email: seller23@nimon.com , Password: rahasia
+[SELLER] Email: seller24@nimon.com , Password: buyer
+[SELLER] Email: seller25@nimon.com , Password: admin
 
 ## Troubleshooting
 

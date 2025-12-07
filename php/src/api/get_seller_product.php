@@ -73,14 +73,24 @@ try {
     $offset = ($page - 1) * $limit;
     if ($totalPages === 0) $page = 1;
 
-    $dataSql = "SELECT p.product_id, p.product_name, p.price, p.stock, p.main_image_path, c.name as category_name
-                FROM Product p
-                LEFT JOIN Category_Item ci ON p.product_id = ci.product_id
-                LEFT JOIN Category c ON ci.category_id = c.category_id
-                WHERE $baseWhere
-                GROUP BY p.product_id, c.name
-                $orderBy
-                LIMIT ? OFFSET ?";
+    $dataSql = "SELECT 
+                p.product_id, 
+                p.product_name, 
+                p.price, 
+                p.stock, 
+                p.main_image_path, 
+                c.name as category_name,
+                MAX(a.id) as auction_id,
+                MAX(a.status) as auction_status
+            FROM Product p
+            LEFT JOIN Category_Item ci ON p.product_id = ci.product_id
+            LEFT JOIN Category c ON ci.category_id = c.category_id
+            LEFT JOIN auctions a ON p.product_id = a.product_id 
+                AND a.status IN ('active', 'scheduled') 
+            WHERE $baseWhere
+            GROUP BY p.product_id, c.name, p.product_name, p.price, p.stock, p.main_image_path
+            $orderBy
+            LIMIT ? OFFSET ?";
     
     $dataParams = array_merge($params, [$limit, $offset]);
     $stmtData = $pdo->prepare($dataSql);

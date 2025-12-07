@@ -20,9 +20,10 @@ $data = json_decode(file_get_contents('php://input'), true);
 $product_id = $data['product_id'] ?? null;
 $starting_price = $data['starting_price'] ?? null;
 $start_time = $data['start_time'] ?? null;
+$end_time = $data['end_time'] ?? null;
 
 // Validation
-if (!$product_id || !$starting_price || !$start_time) {
+if (!$product_id || !$starting_price || !$start_time || !$end_time) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Missing required fields']);
     exit;
@@ -60,8 +61,8 @@ try {
     
     // Insert auction
     $stmt = $pdo->prepare("
-        INSERT INTO auctions (product_id, seller_id, starting_price, current_price, status, start_time, created_at)
-        VALUES (?, ?, ?, ?, 'scheduled', ?, NOW())
+        INSERT INTO auctions (product_id, seller_id, starting_price, current_price, status, start_time, end_time, created_at)
+        VALUES (?, ?, ?, ?, 'scheduled', ?, ?, NOW())
     ");
     
     $stmt->execute([
@@ -69,7 +70,8 @@ try {
         $_SESSION['user_id'],
         $starting_price,
         $starting_price,
-        $start_time
+        $start_time,
+        $end_time
     ]);
     
     $auction_id = $pdo->lastInsertId();

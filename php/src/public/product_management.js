@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function fetchAndRenderProducts(page = 1) {
         currentPage = page;
-        loadingIndicator.style.display = 'block';
+        loadingIndicator.classList.add('show');
         productListContainer.innerHTML = '';
         paginationControls.innerHTML = '';
 
@@ -33,17 +33,19 @@ document.addEventListener('DOMContentLoaded', () => {
         xhr.open('GET', apiUrl, true);
         
         xhr.onload = function() {
-            loadingIndicator.style.display = 'none';
+            loadingIndicator.classList.remove('show');
             if (xhr.status >= 200 && xhr.status < 300) {
                 try {
                     const response = JSON.parse(xhr.responseText);
                     if (response.success) {
                         renderProducts(response.products); 
+                        
                         renderPagination(response.pagination);
                     } else {
                         showError(response.message || 'Gagal memuat data.');
                     }
                 } catch (e) {
+                    console.log(e);
                     showError('Gagal memproses respons server.');
                 }
             } else {
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         xhr.onerror = function() {
-            loadingIndicator.style.display = 'none';
+            loadingIndicator.classList.remove('show');
             showError('Error jaringan.');
         };
         
@@ -81,6 +83,29 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         
         products.forEach(p => {
+            const REACT_URL = "http://localhost:5173"; 
+            let auctionButton = '';
+            console.log("🔥 DATA DARI PHP:", data.products);
+            if (p.auction_id) { // klo udah ada -> lihat tombol lihat lelang
+                auctionButton = `
+                    <a href="${REACT_URL}/auction/${p.auction_id}" 
+                       target="_blank"
+                       class="btn-auction-view" 
+                       style="background-color: #2196F3; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; margin-right: 5px; font-size: 12px; display: inline-block; vertical-align: middle;">
+                       👁️ Lihat Lelang
+                    </a>
+                `;
+            } else { //klo blm ada -> lihat tombol mulai lelang 
+                auctionButton = `
+                    <a href="${REACT_URL}/create-auction?productId=${p.product_id}" 
+                       target="_blank"
+                       class="btn-auction-start"
+                       style="background-color: #FF9800; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; margin-right: 5px; font-size: 12px; display: inline-block; vertical-align: middle;">
+                       🔨 Mulai Lelang
+                    </a>
+                `;
+            }
+
             tableHtml += `
                 <tr id="product-row-${p.product_id}">
                     <td><img class="product-image" src="${p.main_image_path || '/images/placeholder.png'}" alt="${p.product_name}"></td>
@@ -89,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>Rp ${Number(p.price).toLocaleString('id-ID')}</td>
                     <td>${p.stock}</td>
                     <td class="actions">
-                        <a href="/edit_product.php?product_id=${p.product_id}" class="btn-edit">
+                        ${auctionButton} <a href="/edit_product.php?product_id=${p.product_id}" class="btn-edit">
                             <img src="../style/icons/pen-line.svg" alt="Edit" class="action-icon">
                         </a>
                         <button type="button" class="btn-delete delete-button" data-product-id="${p.product_id}" data-product-name="${escapeHTML(p.product_name)}">

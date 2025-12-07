@@ -59,5 +59,72 @@ const stopAuction = async (req, res) => {
     res.status(400).json({ success: false, message: error.message });
   }
 };
+const getAuctionById = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-module.exports = { getAuctions, stopAuction };
+    const query = `
+      SELECT 
+        a.id, a.product_id, a.seller_id, a.starting_price, a.current_price, 
+        a.status, a.start_time, a.end_time,
+        p.product_name, 
+        p.description, 
+        p.main_image_path,
+        u.name AS seller_name,
+        (SELECT COUNT(DISTINCT bidder_id) FROM auction_bids WHERE auction_id = a.id) as bidder_count,
+        (
+            SELECT bidder_id 
+            FROM auction_bids 
+            WHERE auction_id = a.id 
+            ORDER BY bid_amount DESC 
+            LIMIT 1
+        ) as winner_id
+      FROM auctions a
+      JOIN Product p ON a.product_id = p.product_id
+      JOIN Users u ON a.seller_id = u.user_id
+      WHERE a.id = $1
+    `;
+
+    const result = await pool.query(query, [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Lelang tidak ditemukan' });
+    }
+
+    res.json({
+      success: true,
+      data: result.rows[0]
+    });
+
+  } catch (error) {
+    console.error('Error fetching auction detail:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+const cancelAuction = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.body;
+
+  try {
+    if (!userId) {
+      return res.status(400).json({ success: false, message: 'User ID diperlukan' });
+    }
+
+    const auctionService = req.app.get('auctionService');
+
+    await auctionService.cancelAuction(id, userId);
+
+    res.json({ success: true, message: 'Lelang berhasil dibatalkan' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message || 'Gagal membatalkan lelang' });
+  }
+};
+
+module.exports = {
+  getAuctions,
+  getAuctionById,
+  stopAuction,
+  cancelAuction
+};
